@@ -1,0 +1,14 @@
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 80468745d5c5..76870f4c88fe 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3687,6 +3687,9 @@ static int btusb_setup_qca(struct hci_dev *hdev)
+ 		return err;
+ 
+ 	ver_rom = le32_to_cpu(ver.rom_version);
++	/* Don't care about high ROM versions */
++	if (ver_rom & ~0xffffU)
++		return 0;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(qca_devices_table); i++) {
+ 		if (ver_rom == qca_devices_table[i].rom_version)
